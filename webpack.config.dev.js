@@ -34,7 +34,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
       filename: 'index.html',
-      title: 'Simple Redux Boilerplate',
+      title: 'OverStats',
       inject: 'body'
     }),
     /**
@@ -55,8 +55,28 @@ module.exports = {
         include: path.join(__dirname, 'src')
       },
       {
+       test: /\.jsx?$/,
+       exclude: /node_modules/,
+       loader: 'babel',
+       query: {
+         presets:[ 'es2015', 'react-hmre', 'react', 'stage-2' ],
+         plugins: ['transform-decorators-legacy']
+       }
+     },
+      {
         test: /\.scss$/,
         loader: 'style!css!sass'
+      },
+      {
+        test: /\.(css)$/,
+        loader: 'style!css'
+      },
+      { test: /\.json$/,
+        loaders: ['json-loader']
+      },
+      {
+         test: /\.(eot|svg|ttf|woff|woff2)$/,
+         loader: 'file-loader'
       }
     ]
   }

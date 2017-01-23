@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as CounterActions from '../actions/CounterActions';
-import Counter from '../components/Counter';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import * as DataActions from '../actions/action';
+import DevTools from './DevTools';
 
 /**
  * It is common practice to have a 'Root' container/component require our main App (this one).
@@ -13,22 +14,20 @@ import Footer from '../components/Footer';
 class App extends Component {
   render() {
     // we can use ES6's object destructuring to effectively 'unpack' our props
-    const { counter, actions } = this.props;
+    const { data, actions } = this.props;
+    // console.log(this.props);
     return (
-      <div className="main-app-container">
-        <div className="main-app-nav">Simple Redux Boilerplate</div>
-        {/* notice that we then pass those unpacked props into the Counter component */}
-        <Counter counter={counter} actions={actions} />
+    <div>
+        <Header />
+          {this.props.children}
         <Footer />
-      </div>
-    );
+        <DevTools />
+
+    </div>
+      );
   }
 }
 
-App.propTypes = {
-  counter: PropTypes.number.isRequired,
-  actions: PropTypes.object.isRequired
-};
 
 /**
  * Keep in mind that 'state' isn't the state of local object, but your single
@@ -37,7 +36,7 @@ App.propTypes = {
  */
 function mapStateToProps(state) {
   return {
-    counter: state.counter
+    data: state.Data,
   };
 }
 
@@ -51,7 +50,8 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(CounterActions, dispatch)
+    dispatch : dispatch,
+    actions: bindActionCreators(DataActions, dispatch)
   };
 }
 
